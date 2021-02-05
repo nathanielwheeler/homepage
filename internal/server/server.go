@@ -58,7 +58,7 @@ func (s *Server) HandleHome() http.HandlerFunc {
 	)
 	return func(w http.ResponseWriter, r *http.Request) {
 		init.Do(func() {
-			tpl, err = template.New("").ParseGlob("web/*.tpl")
+			tpl, err = template.New("").ParseGlob("web/template/*.tpl")
 		})
 		if err != nil {
 			s.Logger.Printf("%s\n", err)
