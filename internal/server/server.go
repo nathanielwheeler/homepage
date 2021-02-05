@@ -1,10 +1,14 @@
 package server
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
+	"sync"
+
+	"github.com/gorilla/mux"
 	// bolt "go.etcd.io/bbolt"
 )
 
@@ -13,7 +17,9 @@ func Run() error {
 	var err error
 
 	s := NewServer()
-	http.ListenAndServe(":1729", s)
+	port := ":1729"
+	fmt.Printf("Listening on %s...\n", port)
+	http.ListenAndServe(port, s)
 
 	return err
 }
@@ -21,6 +27,7 @@ func Run() error {
 // Server holds the handler, database, and methods used by homepage.
 type Server struct {
 	Logger *log.Logger
+	Router *mux.Router
 	// DB      *bolt.DB
 }
 
@@ -28,7 +35,10 @@ type Server struct {
 func NewServer() *Server {
 	s := Server{
 		Logger: log.New(os.Stdout, "homepage: ", log.Lshortfile),
+		Router: mux.NewRouter(),
 	}
+
+	s.Routes()
 
 	// TODO implement DB setup
 
@@ -36,13 +46,30 @@ func NewServer() *Server {
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	tpl, err := template.New("").ParseFiles("web/main.tpl")
-	if err != nil {
-    s.Logger.Fatalf("%s\n", err)
-  }
-  
-  err = tpl.ExecuteTemplate(w, "main", nil)
-  if err != nil {
-    s.Logger.Fatalf("%s\n", err)
-  }
+	s.Router.ServeHTTP(w, r)
+}
+
+// HandleHome will serve the home page
+func (s *Server) HandleHome() http.HandlerFunc {
+	var (
+		init sync.Once
+		tpl  *template.Template
+		err  error
+	)
+	return func(w http.ResponseWriter, r *http.Request) {
+		init.Do(func() {
+			tpl, err = template.New("").ParseGlob("web/*.tpl")
+		})
+		if err != nil {
+			s.Logger.Printf("%s\n", err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		err = tpl.ExecuteTemplate(w, "main", nil)
+		if err != nil {
+			s.Logger.Fatalf("%s\n", err)
+		}
+	}
+
 }
