@@ -1,4 +1,4 @@
-.grid-array
+.grid-cards
 	display: grid
 	grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr))
 	grid-gap: 1rem
@@ -6,3 +6,29 @@
 		background: $darker
 		padding: 1.5rem
 		border-radius: 1rem
+
+.grid-center-container
+	display: grid
+	height: 100vh
+	grid-template-columns: 1fr 3fr 1fr
+	grid-template-rows: 1fr 3fr 1fr
+	grid-template-areas: "tl top tr" "left center right" "bl bottom br"
+	.grid-top
+		grid-area: top
+	.grid-center
+		grid-area: center
+		background: $red
+	.grid-bottom
+		grid-area: bottom
+	.grid-left
+		grid-area: left
+	.grid-right
+		grid-area: right
+	.grid-tl
+		grid-area: tl
+	.grid-tr
+		grid-area: tr
+	.grid-bl
+		grid-area: bl
+	.grid-br
+		grid-area: br

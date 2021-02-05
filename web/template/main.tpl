@@ -19,10 +19,10 @@
 </head>
 <body>
 
-  <div class="grid-array">
-    <p>One</p>
-    <p>One</p>
-    <p>One</p>
+  <div class="grid-center-container">
+    <div class="grid-top"></div>
+    <div class="grid-center">WoW</div>
+    <div class="grid-left"></div>
   </div>
   
 </body>
