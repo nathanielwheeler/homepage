@@ -1,9 +1,15 @@
 package main
 
 import (  
-    "fmt"
+  "fmt"
+  "os"
+
+  "homepage/internal/wasm"
 )
 
 func main() {  
-    fmt.Println("Go Web Assembly")
+    if err := wasm.Run(); err != nil {
+      fmt.Fprintf(os.Stderr, "%s\n", err)
+      os.Exit(1)
+    }
 }
