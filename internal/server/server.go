@@ -1,6 +1,7 @@
 package server
 
 import (
+	"html/template"
 	"log"
 	"net/http"
 	"os"
@@ -12,15 +13,14 @@ func Run() error {
 	var err error
 
 	s := NewServer()
-	http.ListenAndServe(":1729", *s.Handler)
+	http.ListenAndServe(":1729", s)
 
 	return err
 }
 
 // Server holds the handler, database, and methods used by homepage.
 type Server struct {
-	Handler *http.Handler
-	Logger  *log.Logger
+	Logger *log.Logger
 	// DB      *bolt.DB
 }
 
@@ -28,11 +28,21 @@ type Server struct {
 func NewServer() *Server {
 	s := Server{
 		Logger: log.New(os.Stdout, "homepage: ", log.Lshortfile),
-  }
-  
-  // TODO implement handler
+	}
 
 	// TODO implement DB setup
 
 	return &s
+}
+
+func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	tpl, err := template.New("").ParseFiles("web/main.tpl")
+	if err != nil {
+    s.Logger.Fatalf("%s\n", err)
+  }
+  
+  err = tpl.ExecuteTemplate(w, "main", nil)
+  if err != nil {
+    s.Logger.Fatalf("%s\n", err)
+  }
 }
