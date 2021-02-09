@@ -28,7 +28,7 @@ func Run() error {
 type Server struct {
 	Logger *log.Logger
 	Router *mux.Router
-	DB      *bolt.DB
+	DB     *bolt.DB
 }
 
 // NewServer is a constructor function for Server.
@@ -39,10 +39,10 @@ func NewServer() *Server {
 	}
 
 	s.Routes()
-  err := s.DBInit("tools/bbolt.db")
-  if err != nil {
-    s.Logger.Printf("%s\n", err)
-  }
+	err := s.DBInit("tools/bbolt.db")
+	if err != nil {
+		s.Logger.Printf("%s\n", err)
+	}
 
 	return &s
 }
