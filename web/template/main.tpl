@@ -17,13 +17,22 @@
       });
   </script>
 </head>
-<body>
+<body class="grid-center-container">
 
-  <div class="grid-center-container">
-    <div class="grid-top"></div>
-    <div class="grid-center">WoW</div>
-    <div class="grid-left"></div>
-  </div>
+  <header class="grid-top"></header>
+  <main class="grid-center">
+    <div class="grid-cards">
+      <div class="todo">
+        <h3 class="todo-title">TODO</h3>
+        <ul>
+          <li>One</li>
+          <li>Two</li>
+          <li>Three</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <footer class="grid-bottom"></footer>
   
 </body>
 </html>
