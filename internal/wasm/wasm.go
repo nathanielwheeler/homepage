@@ -2,7 +2,7 @@ package wasm
 
 import (
 	"fmt"
-	"syscall/js" // ignore, build handles
+	"syscall/js" // ignore warning, build script handles this
 )
 
 // Run will start frontend processes, returning an error if there is any.
