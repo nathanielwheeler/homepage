@@ -1,6 +1,7 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
@@ -78,7 +79,22 @@ func (s *Server) HandleHome() http.HandlerFunc {
 
 // HandleError will return an error message.
 func (s *Server) HandleError(msg string, code int) http.HandlerFunc {
-  return func(w http.ResponseWriter, r *http.Request) {
-    http.Error(w, msg, code)
-  }
+	return func(w http.ResponseWriter, r *http.Request) {
+		http.Error(w, msg, code)
+	}
+}
+
+func (s *Server) respond(w http.ResponseWriter, r *http.Request, data interface{}, code int) {
+	w.WriteHeader(code)
+	if data != nil {
+		err := json.NewEncoder(w).Encode(data)
+		if err != nil {
+			s.Logger.Printf("%s\n", err)
+			http.Error(w, "encoding error", http.StatusInternalServerError)
+		}
+	}
+}
+
+func (s *Server) decode(w http.ResponseWriter, r *http.Request, v interface{}) error {
+	return json.NewDecoder(r.Body).Decode(v)
 }
