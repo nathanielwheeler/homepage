@@ -91,7 +91,9 @@ func (s *Server) respond(w http.ResponseWriter, r *http.Request, data interface{
 		if err != nil {
 			s.Logger.Printf("%s\n", err)
 			http.Error(w, "encoding error", http.StatusInternalServerError)
-		}
+		} else {
+      s.Logger.Printf("data encoded: %v\n", data)
+    }
 	}
 }
 

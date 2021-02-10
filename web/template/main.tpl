@@ -16,7 +16,7 @@
       .instantiateStreaming(fetch("/app/json.wasm"), go.importObject)
       .then((result) => {
         go.run(result.instance);
-      });
+    });
   </script>
 </head>
 <body class="grid-center-container">
@@ -30,6 +30,9 @@
           <li>One</li>
           <li>Two</li>
           <li>Three</li>
+          <li>
+            {{template "taskForm"}}
+          </li>
         </ul>
       </div>
     </div>
@@ -38,4 +41,11 @@
   
 </body>
 </html>
+{{end}}
+
+{{define "taskForm"}}
+  <form onsubmit="app.taskController.taskCreate(event)">
+    <input type="text" name="task">
+    <button type="submit">submit</button>
+  </form>
 {{end}}

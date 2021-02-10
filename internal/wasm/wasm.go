@@ -1,6 +1,7 @@
 package wasm
 
 import (
+	"encoding/json"
 	"fmt"
 	"syscall/js" // ignore warning, build script handles this
 )
@@ -12,10 +13,10 @@ func Run() error {
 
 	SetupFuncMap()
 
-  err = SetupApp()
-  if err != nil {
-    return err
-  }
+	err = SetupApp()
+	if err != nil {
+		return err
+	}
 
 	// Wait for commands on channel
 	<-make(chan bool)
@@ -27,7 +28,7 @@ func SetupFuncMap() {
 	funcMap := make(map[string]js.Func)
 
 	funcMap["echo"] = js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-    var str string
+		var str string
 		for _, v := range args {
 			str += v.String()
 		}
@@ -37,4 +38,25 @@ func SetupFuncMap() {
 	for k, v := range funcMap {
 		js.Global().Set(k, v)
 	}
+}
+
+// HELPERS
+
+func jsGet(v js.Value, elements ...string) js.Value {
+	for _, e := range elements {
+		v.Get(e)
+	}
+	return v
+}
+
+func prettyJSON(input string) (string, error) {
+	var raw interface{}
+	if err := json.Unmarshal([]byte(input), &raw); err != nil {
+		return "", err
+	}
+	pretty, err := json.MarshalIndent(raw, "", "  ")
+	if err != nil {
+		return "", err
+	}
+	return string(pretty), nil
 }
