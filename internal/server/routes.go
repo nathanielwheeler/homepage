@@ -31,5 +31,10 @@ func (s *Server) Routes() {
     r.PathPrefix(v.prefix).Handler(http.StripPrefix(v.prefix, http.FileServer(http.Dir(v.dir))))
   }
 
+  // API
+  r.HandleFunc("/api/tasks", s.HandleTasks("create")).Methods("POST")
+  r.HandleFunc("/api/tasks/{id:[0-9+]}", s.HandleTasks("delete")).Methods("POST")
+
+  // The only user page
 	r.HandleFunc("/", s.HandleHome())
 }

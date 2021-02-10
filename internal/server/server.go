@@ -75,3 +75,10 @@ func (s *Server) HandleHome() http.HandlerFunc {
 	}
 
 }
+
+// HandleError will return an error message.
+func (s *Server) HandleError(msg string, code int) http.HandlerFunc {
+  return func(w http.ResponseWriter, r *http.Request) {
+    http.Error(w, msg, code)
+  }
+}
