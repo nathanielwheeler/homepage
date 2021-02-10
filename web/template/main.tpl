@@ -7,8 +7,10 @@
   <title>Home</title>
   <link rel="stylesheet" href="/app/style.css">
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="/static/wasm_exec.js"></script>
   <script>
+    const axios = 'axios';
     const go = new Go();
     WebAssembly
       .instantiateStreaming(fetch("/app/json.wasm"), go.importObject)

@@ -27,10 +27,11 @@ func SetupFuncMap() {
 	funcMap := make(map[string]js.Func)
 
 	funcMap["echo"] = js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		for i, v := range args {
-			fmt.Printf("%d: %v\n", i, v)
+    var str string
+		for _, v := range args {
+			str += v.String()
 		}
-		return ""
+		return js.ValueOf(str)
 	})
 
 	for k, v := range funcMap {
