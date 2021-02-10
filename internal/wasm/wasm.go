@@ -12,6 +12,11 @@ func Run() error {
 
 	SetupFuncMap()
 
+  err = SetupApp()
+  if err != nil {
+    return err
+  }
+
 	// Wait for commands on channel
 	<-make(chan bool)
 	return err
