@@ -36,7 +36,7 @@ func (s *Server) DBInit(dbPath string) error {
 
 // TaskGetAll will return all tasks as a map.
 func (s *Server) TaskGetAll() (map[int]string, error) {
-	var tasks map[int]string
+	tasks := make(map[int]string)
 	err := s.DB.View(func(tx *bolt.Tx) error {
 		b := tx.Bucket([]byte("tasks"))
 		c := b.Cursor()

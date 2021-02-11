@@ -69,7 +69,13 @@ func (s *Server) HandleHome() http.HandlerFunc {
 			return
 		}
 
-		err = tpl.ExecuteTemplate(w, "main", nil)
+    m, err := s.TaskGetAll()
+    if err != nil {
+      s.Logger.Printf("TasksGetAll: %s\n", err)
+    }
+    tasks := mapToXTask(m)
+
+		err = tpl.ExecuteTemplate(w, "main", tasks)
 		if err != nil {
 			s.Logger.Fatalf("%s\n", err)
 		}
