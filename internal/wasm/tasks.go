@@ -21,8 +21,8 @@ func (a *App) TaskCreate() js.Func {
 		event.Call("preventDefault")
     
 		req := make(map[string]interface{})
-    req["task"] = js.Global().Get("document").Call("getElementById", "newTask").Get("value")
-    fmt.Println(req)
+    task := js.Global().Get("document").Call("getElementById", "newTask").Get("value")
+    req["task"] = task
 
 		// POST /api/tasks
     // FIXME JSON not getting through to server
