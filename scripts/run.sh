@@ -1,4 +1,3 @@
 #!/bin/sh
-./scripts/sass.sh
-./scripts/ts.sh
+./scripts/web-build.sh &
 go run cmd/homepage/main.go

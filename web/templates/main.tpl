@@ -8,8 +8,7 @@
   <title>Home</title>
   <link rel="stylesheet" href="/styles/style.css">
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="/app/main.js"></script>
+  <script src="/app/bundle.js"></script>
 </head>
 
 <body class="grid-center-container">
@@ -38,8 +37,7 @@
 {{end}}
 
 {{define "taskForm"}}
-<form onsubmit="app.taskController.taskCreate(event)">
-<!-- <form onsubmit="formSubmit(event)"> -->
+<form onsubmit="app.Tasks.Create(event)">
   <input type="text" name="task" id="newTask">
   <button type="submit">submit</button>
 </form>
