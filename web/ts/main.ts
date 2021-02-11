@@ -1,9 +1,12 @@
-class App {
-  hello = helloFunc
+interface App {
+  hello: () => void
 }
 
-function helloFunc() {
-  console.log("hello world")
+let newApp = function (): App {
+  const app: App = {
+    hello: () => { console.log("hello world") }
+  }
+  return app
 }
 
-window["app"] = new App()
+window["app"] = newApp()
