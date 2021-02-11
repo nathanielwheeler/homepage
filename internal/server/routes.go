@@ -20,7 +20,7 @@ func (s *Server) Routes() {
   var fsDirs []fsDir
   fsDirs = append(fsDirs, fsDir{prefix: "/assets/", dir: "assets"})
   fsDirs = append(fsDirs, fsDir{prefix: "/app/", dir: "web/app"})
-  fsDirs = append(fsDirs, fsDir{prefix: "/static/", dir: "web/static"})
+  fsDirs = append(fsDirs, fsDir{prefix: "/styles/", dir: "web/styles"})
   for _, v := range fsDirs {
     // Check if directory exists
     _, err = os.Stat(v.dir)
