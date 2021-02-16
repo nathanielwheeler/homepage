@@ -1,4 +1,10 @@
 #!/bin/sh
 cd web
-rm -rf app/* && npm run build
+# remove previous build
+rm -rf app/*
+# Build javascript from typescript THEN build bundle
+tsc
+# Bundle with webpack to app
+npx webpack --config webpack.config.js
+# Build styles from sass
 sass sass/main.sass styles/style.css

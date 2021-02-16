@@ -2,17 +2,13 @@
   "name": "homepage",
   "version": "1.0.0",
   "description": "frontend",
-  "main": "app/bundle.js",
-  "scripts": {
-    "build": "tsc && rollup -c rollup.config.js"
-  },
+  "private": true,
   "author": "Nathaniel Wheeler",
   "license": "MIT",
   "dependencies": {
-    "@open-wc/building-rollup": "^1.9.4",
     "axios": "^0.21.1",
     "common-js": "^0.3.8",
-    "deepmerge": "^4.2.2",
-    "rollup": "^2.38.5"
+    "webpack": "^5.22.0",
+    "webpack-cli": "^4.5.0"
   }
 }
