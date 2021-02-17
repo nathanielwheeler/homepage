@@ -8,7 +8,7 @@
   <title>Home</title>
   <link rel="stylesheet" href="/styles/style.css">
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
-  <script src="/app/bundle.js"></script>
+  <script src="/app/main.js"></script>
 </head>
 
 <body class="grid-center-container">
