@@ -30,7 +30,8 @@ export function NewTasks(): tasks.Tasks {
         })
         // TODO push task to list
         const taskTpl = taskTplGet(res.data.id, task)
-        document.getElementById("tasks")?.append(taskTpl)
+        const tasks = document.getElementById("tasks")
+        tasks!.innerHTML += taskTpl
       } catch (err) {
         console.log(err)
       }
@@ -46,9 +47,10 @@ export function NewTasks(): tasks.Tasks {
 // Templates
 
 function taskTplGet(id: number, task: string): string {
-  return `<div>
+  const html = `<div>
   <span>
     <input type="checkbox" onchange="app.Tasks.Complete(event, ${id})">${task}
   </span>
 </div>`
+return html
 }

@@ -41,8 +41,6 @@ func (s *Server) HandleTaskCreate() http.HandlerFunc {
 			s.Logger.Printf("db error: %s\n", err)
 			http.Error(w, "db error", http.StatusInternalServerError)
 		}
-
-		res.ID = 1
 		s.respond(w, r, res, http.StatusOK)
 	}
 }
