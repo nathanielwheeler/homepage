@@ -18,15 +18,15 @@ export function NewTasks(): tasks.Tasks {
       if (typeof input.value === 'undefined') {
         return null
       }
-      interface request {
-        task: string
-      }
-      const req: request = {
-        task: input.value,
-      }
       try {
-        const res = await axios.post("/tasks", req)
-        console.log(res.data) // Successfully returns id
+        const res = await axios.request({
+          method: 'POST',
+          url: "/tasks",
+          data: {
+            task: input.value
+          }
+        })
+        console.log(res)
         // TODO push task to list
       } catch (error) {
         console.log(error)

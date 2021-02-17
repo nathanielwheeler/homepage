@@ -3,4 +3,4 @@ web/app/*
 web/js/*
 web/styles/*
 
-tools/bbolt.db
+.bbolt.db

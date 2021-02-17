@@ -1,7 +1,6 @@
 package server
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -19,12 +18,8 @@ func (s *Server) HandleTaskCreate() http.HandlerFunc {
 	type response struct {
 		ID int `json:"id"`
 	}
-	// FIXME receiving empty request from client
-	type data struct {
-		Task string `json:"task"`
-	}
 	type request struct {
-		Data data `json:"data"`
+		Task string `json:"task"`
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -33,15 +28,20 @@ func (s *Server) HandleTaskCreate() http.HandlerFunc {
 			req request
 			err error
 		)
-		fmt.Println(r)
-		s.decode(w, r, req)
-		s.Logger.Println(req)
-		res.ID, err = s.TaskCreate(req.Data.Task)
+		err = s.decode(w, r, &req)
+		if err != nil {
+			s.Logger.Printf("%s\n", err)
+		}
+
+		// TODO validate input
+
+		res.ID, err = s.TaskCreate(req.Task)
 		if err != nil {
 			s.Logger.Printf("db error: %s\n", err)
 			http.Error(w, "db error", http.StatusInternalServerError)
 		}
-		s.Logger.Println("task id:", res.ID)
+
+		res.ID = 1
 		s.respond(w, r, res, http.StatusOK)
 	}
 }
