@@ -31,6 +31,7 @@ func (s *Server) HandleTaskCreate() http.HandlerFunc {
 		err = s.decode(w, r, &req)
 		if err != nil {
 			s.Logger.Printf("%s\n", err)
+      s.respond(w, r, nil, http.StatusBadRequest)
 		}
 
 		// TODO validate input

@@ -18,13 +18,15 @@
     <div class="grid-cards">
       <div class="card todo">
         <h3 class="todo-title">TODO</h3>
-        {{if .}}
-          {{range .}}
-            {{if .}}
-            {{template "task" .}}
+        <div id="tasks">
+          {{if .}}
+            {{range .}}
+              {{if .}}
+              {{template "task" .}}
+              {{end}}
             {{end}}
           {{end}}
-        {{end}}
+        </div>
         {{template "taskForm"}}
       </div>
     </div>
@@ -46,7 +48,7 @@
 {{define "task"}}
 <div>
   <span>
-    <input type="checkbox">{{.Name}}
+    <input type="checkbox" onchange="app.Tasks.Complete(event, {{.ID}})">{{.Name}}
   </span>
 </div>
 {{end}}

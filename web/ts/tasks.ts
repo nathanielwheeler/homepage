@@ -4,6 +4,7 @@ declare namespace tasks {
   // Tasks holds exported methods related to tasks.
   export interface Tasks {
     Create: (e: Event) => void
+    Complete: (e: Event, id: number) => void
   }
 }
 export { tasks }
@@ -14,24 +15,40 @@ export function NewTasks(): tasks.Tasks {
     Create: async (e: Event) => {
       e.preventDefault()
       type formInput = HTMLElement & { value?: string }
-      let input: formInput = document.getElementById("newTask")!
+      const input: formInput = document.getElementById("newTask")!
       if (typeof input.value === 'undefined') {
         return null
       }
+      const task = input.value
       try {
         const res = await axios.request({
           method: 'POST',
           url: "/tasks",
           data: {
-            task: input.value
+            task: task
           }
         })
-        console.log(res)
         // TODO push task to list
-      } catch (error) {
-        console.log(error)
+        const taskTpl = taskTplGet(res.data.id, task)
+        document.getElementById("tasks")?.append(taskTpl)
+      } catch (err) {
+        console.log(err)
       }
+    },
+    Complete: async (e: Event, id: number) => {
+      e.preventDefault()
+      console.log("TODO: implement")
     }
   }
   return t
+}
+
+// Templates
+
+function taskTplGet(id: number, task: string): string {
+  return `<div>
+  <span>
+    <input type="checkbox" onchange="app.Tasks.Complete(event, ${id})">${task}
+  </span>
+</div>`
 }
