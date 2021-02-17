@@ -14,8 +14,7 @@ export function NewTasks(): tasks.Tasks {
   const t: tasks.Tasks = {
     Create: async (e: Event) => {
       e.preventDefault()
-      type formInput = HTMLElement & { value?: string }
-      const input: formInput = document.getElementById("newTask")!
+      let input = <HTMLInputElement> document.getElementById("newTask")!
       if (typeof input.value === 'undefined') {
         return null
       }
@@ -28,11 +27,13 @@ export function NewTasks(): tasks.Tasks {
             task: task
           }
         })
-        // TODO push task to list
+        // Add task to list and clear input
         const taskTpl = taskTplGet(res.data.id, task)
         const tasks = document.getElementById("tasks")
         tasks!.innerHTML += taskTpl
+        input.value = ""
       } catch (err) {
+        // TODO display error to user
         console.log(err)
       }
     },
@@ -49,6 +50,7 @@ export function NewTasks(): tasks.Tasks {
         })
         task.remove()
       } catch (err) { 
+        // TODO display error to user
         console.log(err)
         let taskCheck = <HTMLInputElement> task.querySelector(".task-check")!
         taskCheck.checked = false
