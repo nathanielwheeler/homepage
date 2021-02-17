@@ -38,7 +38,21 @@ export function NewTasks(): tasks.Tasks {
     },
     Complete: async (e: Event, id: number) => {
       e.preventDefault()
-      console.log("TODO: implement")
+      let task = document.getElementById(`t-${id}`)!
+      try {
+        const res = await axios.request({
+          method: 'POST',
+          url: `/tasks/${id}/complete`,
+          data: {
+            id: id
+          }
+        })
+        task.remove()
+      } catch (err) { 
+        console.log(err)
+        let taskCheck = <HTMLInputElement> task.querySelector(".task-check")!
+        taskCheck.checked = false
+      }
     }
   }
   return t
@@ -47,9 +61,9 @@ export function NewTasks(): tasks.Tasks {
 // Templates
 
 function taskTplGet(id: number, task: string): string {
-  const html = `<div>
+  const html = `<div id="t-${id}">
   <span>
-    <input type="checkbox" onchange="app.Tasks.Complete(event, ${id})">${task}
+    <input class="task-check" type="checkbox" onchange="app.Tasks.Complete(event, ${id})">${task}
   </span>
 </div>`
 return html

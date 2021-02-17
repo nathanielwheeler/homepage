@@ -46,9 +46,9 @@
 {{end}}
 
 {{define "task"}}
-<div>
+<div id="t-{{.ID}}">
   <span>
-    <input type="checkbox" onchange="app.Tasks.Complete(event, {{.ID}})">{{.Name}}
+    <input class="task-check" type="checkbox" onchange="app.Tasks.Complete(event, {{.ID}})">{{.Name}}
   </span>
 </div>
 {{end}}
