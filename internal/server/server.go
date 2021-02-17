@@ -40,7 +40,7 @@ func NewServer() *Server {
 	}
 
 	s.Routes()
-	err := s.DBInit("tools/bbolt.db")
+	err := s.DBInit(".bbolt.db")
 	if err != nil {
 		s.Logger.Printf("%s\n", err)
 	}

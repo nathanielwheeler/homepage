@@ -34,7 +34,7 @@ func (s *Server) HandleTaskCreate() http.HandlerFunc {
 			err error
 		)
 		fmt.Println(r)
-		s.decode(w, r, req)
+		s.decode(w, r, &req)
 		s.Logger.Println(req)
 		res.ID, err = s.TaskCreate(req.Data.Task)
 		if err != nil {

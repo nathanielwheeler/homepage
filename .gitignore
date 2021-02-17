@@ -1,3 +1,7 @@
 web/app/*
 web/static/wasm_exec.js
-tools/bbolt.db
+web/js/*
+web/styles/*
+web/node_modules
+
+.bbolt.db
