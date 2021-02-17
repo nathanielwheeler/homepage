@@ -32,8 +32,10 @@ func (s *Server) Routes() {
   }
 
   // API
+  // POST /tasks
   r.HandleFunc("/tasks", s.HandleTaskCreate()).Methods("POST")
-  r.HandleFunc("/tasks/{id:[0-9+]}", s.HandleTaskDelete()).Methods("POST")
+  // POST /tasks/:id/complete
+  r.HandleFunc("/tasks/{id:[0-9+]}/complete", s.HandleTaskDelete()).Methods("POST")
 
   // The only user page
 	r.HandleFunc("/", s.HandleHome())

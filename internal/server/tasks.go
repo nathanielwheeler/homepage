@@ -47,7 +47,6 @@ func (s *Server) HandleTaskCreate() http.HandlerFunc {
 
 // HandleTaskDelete will handle requests to delete tasks.
 func (s *Server) HandleTaskDelete() http.HandlerFunc {
-
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := strconv.Atoi(mux.Vars(r)["id"])
 		if err != nil {
@@ -59,6 +58,7 @@ func (s *Server) HandleTaskDelete() http.HandlerFunc {
 			s.Logger.Printf("%s\n", err)
 			http.Error(w, "db error", http.StatusInternalServerError)
 		}
+    s.respond(w, r, nil, http.StatusOK)
 	}
 }
 
